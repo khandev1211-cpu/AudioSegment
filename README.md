@@ -136,3 +136,15 @@ output/
 │   └── surah_meta.py             # surah + reference segments + qari names
 └── models/tarteel-whisper-base-ar-quran-ct2/   # converted CT2 model
 ```
+
+---
+
+## 👨‍💻 Developer
+
+| | |
+|---|---|
+| **Name** | Irfan Khan |
+| **WhatsApp** | [+92 343 3791141](https://wa.me/923433791141) |
+| **Email** | [khandev1211@gmail.com](mailto:khandev1211@gmail.com) |
+
+Kisi bhi feature, bug, ya naye surah / qari / reference segments ke liye contact karein.
