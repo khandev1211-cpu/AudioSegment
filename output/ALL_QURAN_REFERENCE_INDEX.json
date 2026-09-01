@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0",
+  "project": "Quran Audio Segmenter — reference segments index",
+  "generated_at": "2026-09-01T22:19:45.051926+00:00",
+  "model": {
+    "engine": "faster-whisper (CTranslate2)",
+    "model_directory": "C:\\Users\\CHAND COMPUTER\\Desktop\\AudioSegment\\models\\tarteel-whisper-base-ar-quran-ct2",
+    "device": "cuda",
+    "compute_type": "float16",
+    "source_base_model": "tarteel-ai/whisper-base-ar-quran",
+    "language": "arabic"
+  },
+  "total_files": 11,
+  "total_segments": 122,
+  "files": [
+    {
+      "json_file": "muhammad-siddiq-al-minshawi/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Muhammad Siddiq Al Minshawi",
+        "name_ar": "محمد صديق المنشاوي",
+        "source_folder": "Muhammad Siddiq Al Minshawi"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 12,
+      "segments_matched": 12,
+      "total_duration_sec": 38.4522
+    },
+    {
+      "json_file": "reciter-abdul-basit-abdul-samad/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Abdul Basit Abdul Samad",
+        "name_ar": "عبد الباسط عبد الصمد",
+        "source_folder": "Reciter Abdul Basit Abdul Samad"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 12,
+      "segments_matched": 12,
+      "total_duration_sec": 82.9911
+    },
+    {
+      "json_file": "reciter-ahmed-el-agamy/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Ahmed El Agamy",
+        "name_ar": "أحمد العجمي",
+        "source_folder": "Reciter Ahmed El Agamy"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 10,
+      "segments_matched": 10,
+      "total_duration_sec": 22.1519
+    },
+    {
+      "json_file": "reciter-al-shatri/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Al Shatri",
+        "name_ar": "أبو بكر الشاطري",
+        "source_folder": "Reciter Al Shatri"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 12,
+      "segments_matched": 12,
+      "total_duration_sec": 31.4253
+    },
+    {
+      "json_file": "reciter-hatem-fareed-al-waer/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Hatem Fareed Al Waer",
+        "name_ar": "حاتم فريد الواعر",
+        "source_folder": "Reciter Hatem Fareed Al Waer"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 10,
+      "segments_matched": 10,
+      "total_duration_sec": 35.187
+    },
+    {
+      "json_file": "reciter-ibrahim-al-akhdar/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Ibrahim Al-Akhdar",
+        "name_ar": "إبراهيم الأخضر",
+        "source_folder": "Reciter Ibrahim Al-Akhdar"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 12,
+      "segments_matched": 12,
+      "total_duration_sec": 49.2148
+    },
+    {
+      "json_file": "reciter-khalid-al-jalil/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Khalid Al Jalil",
+        "name_ar": "خالد الجليل",
+        "source_folder": "Reciter Khalid Al Jalil"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 12,
+      "segments_matched": 12,
+      "total_duration_sec": 33.1494
+    },
+    {
+      "json_file": "reciter-khalifa-al-tunaiji/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Khalifa Al Tunaiji",
+        "name_ar": "خليفة الطنيجي",
+        "source_folder": "Reciter Khalifa Al Tunaiji"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 10,
+      "segments_matched": 10,
+      "total_duration_sec": 39.6539
+    },
+    {
+      "json_file": "reciter-saad-al-ghamdi/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Saad Al Ghamdi",
+        "name_ar": "سعد الغامدي",
+        "source_folder": "Reciter Saad Al Ghamdi"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 12,
+      "segments_matched": 12,
+      "total_duration_sec": 36.1013
+    },
+    {
+      "json_file": "reciter-salah-bukhatir/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Salah Bukhatir",
+        "name_ar": "صلاح بوخاطر",
+        "source_folder": "Reciter Salah Bukhatir"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 10,
+      "segments_matched": 10,
+      "total_duration_sec": 32.0784
+    },
+    {
+      "json_file": "reciter-saud-al-shuraim/surah_114_an-nas__reference_segments.json",
+      "qari": {
+        "name": "Reciter Saud Al Shuraim",
+        "name_ar": "سعود الشريم",
+        "source_folder": "Reciter Saud Al Shuraim"
+      },
+      "surah": {
+        "number": 114,
+        "name_ar": "الناس",
+        "name_roman": "An-Nas"
+      },
+      "segments_amount": 10,
+      "segments_matched": 10,
+      "total_duration_sec": 23.667
+    }
+  ]
+}

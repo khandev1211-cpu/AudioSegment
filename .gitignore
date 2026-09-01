@@ -1,0 +1,52 @@
+
+# ================= Python =================
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ================= Virtual envs =================
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+*.venv
+
+# ================= IDE / editors =================
+.vscode/
+.idea/
+*.swp
+*.sublime-workspace
+*.sublime-project
+.DS_Store
+Thumbs.db
+
+# ================= This project: generated pipeline data =================
+# Converted Tarteel model (regenerate with: python scripts/convert_model.py)
+models/
+
+# All segmentation output (JSON + WAV clips). Regenerate with:
+#   python reference_segment.py
+
+
+# Source recitation audio (large files, not tracked).
+# NOTE: `refrence/` (client's reference clips) stays TRACKED on purpose.
+QuranAudios/
+
+# ================= Temp / diag artifacts =================
+scripts/_*.wav
+scripts/_*.mp3
+*.tmp
+*.bak
+*~
