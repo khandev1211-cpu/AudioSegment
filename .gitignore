@@ -38,10 +38,12 @@ models/
 
 # All segmentation output (JSON + WAV clips). Regenerate with:
 #   python reference_segment.py
+output/
 
 
 # Source recitation audio (large files, not tracked).
 # NOTE: `refrence/` (client's reference clips) stays TRACKED on purpose.
+Surah/
 QuranAudios/
 
 # ================= Temp / diag artifacts =================
