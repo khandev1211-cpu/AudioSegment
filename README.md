@@ -176,6 +176,7 @@ basmalah nahi). Boundaries har qari ki apni ASR word-timings se nikalte hain.
 ```
 ├── reference_segment.py          <- main entry (reference-based)
 ├── main.py                       <- alternative: VAD-based ayah segmentation
+├── annas_finetune_colab_updated (1).ipynb  <- Colab: Tarteel Whisper fine-tuning (113+114 dataset)
 ├── scripts/convert_model.py      <- HF Tarteel -> CTranslate2 (1 dafa)
 ├── quran_segmenter/
 │   ├── config.py                 # thresholds + model id
