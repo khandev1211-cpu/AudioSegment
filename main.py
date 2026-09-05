@@ -64,6 +64,7 @@ QARI_AR_NAMES = {
     "abdul basit abdul samad": "عبد الباسط عبد الصمد",
     "ahmed el agamy": "أحمد العجمي",
     "al shatri": "أبو بكر الشاطري",
+    "bandar balila": "بندر بليلة",
     "hatem fareed al waer": "حاتم فريد الواعر",
     "ibrahim al-akhdar": "إبراهيم الأخضر",
     "khalid al jalil": "خالد الجليل",

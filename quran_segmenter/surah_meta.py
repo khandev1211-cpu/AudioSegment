@@ -1,8 +1,9 @@
 """Static metadata about the surahs used by the pipeline.
 
 Only the surahs actually present in this workspace are listed explicitly
-(Surah 1 Al-Fatiha and Surah 114 An-Nas). Unknown surah numbers get a safe
-fallback entry. Add more entries here to extend the project later.
+(Surah 1 Al-Fatiha, Surah 113 Al-Falaq, Surah 114 An-Nas). Unknown surah
+numbers get a safe fallback entry. Add more entries here to extend the
+project later.
 """
 from __future__ import annotations
 
@@ -11,6 +12,7 @@ QARI_AR_NAMES = {
     "abdul basit abdul samad": "عبد الباسط عبد الصمد",
     "ahmed el agamy": "أحمد العجمي",
     "al shatri": "أبو بكر الشاطري",
+    "bandar balila": "بندر بليلة",
     "hatem fareed al waer": "حاتم فريد الواعر",
     "ibrahim al-akhdar": "إبراهيم الأخضر",
     "khalid al jalil": "خالد الجليل",
@@ -38,6 +40,48 @@ SURAH_META: dict[int, dict] = {
             "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
             "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
             "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+        ],
+    },
+    113: {
+        "number": 113,
+        "name_ar": "الفلق",
+        "name_roman": "Al-Falaq",
+        "name_meaning": "The Daybreak",
+        "ayahs_count": 5,
+        "revelation_type": "Meccan",
+        "juz": 30,
+        "translation_urdu": "الفلق (صبح کی روشنی)",
+        "ayahs_text": [
+            "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",
+            "مِنْ شَرِّ مَا خَلَقَ",
+            "وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+            "وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ",
+            "وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+        ],
+        "reference_segments": [
+            # Word-level reference splits from the client's surah 113
+            # specification (5 ayaat, 21 word-groups, no basmalah).
+            {"id": 1, "ayah": 1, "text": "قُلْ"},
+            {"id": 2, "ayah": 1, "text": "أَعُوذُ"},
+            {"id": 3, "ayah": 1, "text": "بِرَبِّ الْفَلَقِ"},
+            {"id": 4, "ayah": 2, "text": "مِن"},
+            {"id": 5, "ayah": 2, "text": "شَرِّ"},
+            {"id": 6, "ayah": 2, "text": "مَا"},
+            {"id": 7, "ayah": 2, "text": "خَلَقَ"},
+            {"id": 8, "ayah": 3, "text": "وَمِن"},
+            {"id": 9, "ayah": 3, "text": "شَرِّ"},
+            {"id": 10, "ayah": 3, "text": "غَاسِقٍ"},
+            {"id": 11, "ayah": 3, "text": "إِذَا"},
+            {"id": 12, "ayah": 3, "text": "وَقَبَ"},
+            {"id": 13, "ayah": 4, "text": "وَمِن"},
+            {"id": 14, "ayah": 4, "text": "شَرِّ النَّفَّاثَاتِ"},
+            {"id": 15, "ayah": 4, "text": "فِي"},
+            {"id": 16, "ayah": 4, "text": "الْعُقَدِ"},
+            {"id": 17, "ayah": 5, "text": "وَمِن"},
+            {"id": 18, "ayah": 5, "text": "شَرِّ"},
+            {"id": 19, "ayah": 5, "text": "حَاسِدٍ"},
+            {"id": 20, "ayah": 5, "text": "إِذَا"},
+            {"id": 21, "ayah": 5, "text": "حَسَدَ"},
         ],
     },
     114: {

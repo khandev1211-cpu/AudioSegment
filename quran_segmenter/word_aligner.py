@@ -15,6 +15,7 @@ reuse the reference clip timings. Instead:
 """
 from __future__ import annotations
 
+import difflib
 from pathlib import Path
 
 import numpy as np
@@ -25,7 +26,9 @@ from .silence_segmenter import segment_by_silence
 ASR_SR = 16000
 PAD_SEC = 0.12
 HALLUC_PROB = 0.7
-HALLUC_TOKENS = {"ما", "يغفى", "يحضى", "وشيوم", "مايغفى"}
+# NB: "ما" was once a hallucination token for An-Nas, but it is a REAL word in
+# Al-Falaq (مِنْ شَرِّ مَا خَلَقَ) and appears with p≈1.0, so it must stay.
+HALLUC_TOKENS = {"يغفى", "يحضى", "وشيوم", "مايغفى"}
 
 
 class WordAligner:
@@ -126,12 +129,75 @@ def _tokenize(text: str) -> list[str]:
     return norm.split() if norm else []
 
 
+def _same_norm(a: str, b: str) -> bool:
+    """Compare two normalized Arabic words.
+
+    Exact first; then two light ASR tolerances:
+      1. trailing ``ا`` from tanween (ASR ``حسدا`` ~ reference ``حسد``),
+      2. fuzzy n-gram similarity for 3+ letter words — the Tarteel model
+         sometimes emits a single extra/mutated letter (``الفلقه`` ~ ``الفلق``,
+         ``خلقت`` ~ ``خلق``, ``وقبم`` ~ ``وقب``). Min length 3 keeps short
+         function words strictly exact.
+    """
+    if a == b:
+        return True
+    for x, y in ((a, b), (b, a)):
+        if y and len(x) == len(y) + 1 and x.endswith("ا") and x[:-1] == y:
+            return True
+    if min(len(a), len(b)) >= 3:
+        return difflib.SequenceMatcher(None, a, b).ratio() >= 0.75
+    return False
+
+
+def _find_first_match(word_norms: list[str], tokens: list[str], search_from: int, max_skip: int):
+    """Greedy forward search for ``tokens`` inside ``word_norms``.
+
+    Returns ``(start_index, spans)`` for the first window (starting at or
+    after ``search_from``) that matches — either exact contiguous, or with up
+    to ``max_skip`` extra ASR words between two reference tokens.
+    """
+    ntok = len(tokens)
+    if not ntok:
+        return None
+    for start in range(search_from, len(word_norms) - ntok + 1):
+        window = word_norms[start:start + ntok]
+        if all(_same_norm(w, t) for w, t in zip(window, tokens)):
+            return start, list(range(start, start + ntok))
+        if ntok > 1:
+            pos = start
+            skipped = 0
+            ok = True
+            for tok in tokens:
+                while pos < len(word_norms) and not _same_norm(word_norms[pos], tok):
+                    pos += 1
+                    skipped += 1
+                    if skipped > max_skip:
+                        ok = False
+                        break
+                if not ok or pos >= len(word_norms):
+                    ok = False
+                    break
+                pos += 1
+            if ok and (pos - start - ntok) <= max_skip:
+                # recompute the true end span (consumes tokens while skipping)
+                pos = start
+                last_pos = start
+                for tok in tokens:
+                    while pos < len(word_norms) and not _same_norm(word_norms[pos], tok):
+                        pos += 1
+                    last_pos = pos
+                    pos += 1
+                return start, list(range(start, last_pos + 1))
+    return None
+
+
 def match_phrases_to_words(global_words: list[dict], reference_segments: list[dict]) -> list[dict]:
     """Match each reference phrase to a run of global words.
 
-    Strict-first matching: a phrase must map onto *exact* normalized tokens.
-    Because the ASR stream can contain extra/hallucinated words, we allow at
-    most ``MAX_SKIP`` unknown words inside a phrase between two of its tokens.
+    Strict-first matching: a phrase must map onto normalized tokens with at
+    most ``MAX_SKIP`` unknown ASR words inside. ASR streams sometimes *drop* a
+    single reference word (e.g. ``ما`` inside آية 2), so when the full phrase
+    does not match we also try every single-token-deletion variant.
 
     Returns the reference segments annotated with:
       ``word_indices``          indexes into ``global_words``
@@ -151,52 +217,20 @@ def match_phrases_to_words(global_words: list[dict], reference_segments: list[di
             matches.append({**ph, "matched": False, "word_indices": []})
             continue
 
-        found = None
-        for start in range(search_from, len(word_norms) - ntok + 1):
-            # try exact contiguous first
-            window = word_norms[start:start + ntok]
-            if window == tokens:
-                found = start
-                break
-            # fallback: skip up to MAX_SKIP unknowns between tokens
-            if ntok > 1:
-                pos = start
-                skipped = 0
-                ok = True
-                for tok in tokens:
-                    while pos < len(word_norms) and word_norms[pos] != tok:
-                        pos += 1
-                        skipped += 1
-                        if skipped > MAX_SKIP:
-                            ok = False
-                            break
-                    if not ok or pos >= len(word_norms):
-                        ok = False
-                        break
-                    pos += 1
-                if ok and (pos - start - ntok) <= MAX_SKIP:
-                    found = start
+        result = _find_first_match(word_norms, tokens, search_from, MAX_SKIP)
+        if result is None and ntok > 2:
+            # ASR sometimes skips one reference token entirely; try variants
+            for drop in range(ntok):
+                variant = tokens[:drop] + tokens[drop + 1:]
+                result = _find_first_match(word_norms, variant, search_from, MAX_SKIP)
+                if result is not None:
                     break
 
-        if found is None:
+        if result is None:
             matches.append({**ph, "matched": False, "word_indices": []})
             continue
 
-        if ntok > 1:
-            # recompute the true end span (consumes tokens while skipping)
-            pos = found
-            last_pos = found
-            for tok in tokens:
-                while pos < len(word_norms) and word_norms[pos] != tok:
-                    pos += 1
-                last_pos = pos
-                pos += 1
-            idx_end = last_pos + 1
-            spans = list(range(found, idx_end))
-        else:
-            idx_end = found + 1
-            spans = [found]
-
+        found, spans = result
         matches.append(
             {
                 **ph,
@@ -206,7 +240,7 @@ def match_phrases_to_words(global_words: list[dict], reference_segments: list[di
                 "end_sec": global_words[spans[-1]]["end_sec"],
             }
         )
-        search_from = idx_end
+        search_from = spans[-1] + 1
 
     return matches
 

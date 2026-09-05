@@ -31,7 +31,9 @@ python reference_segment.py
 Ya ek qari ke liye:
 
 ```bash
-python reference_segment.py --qari minshawi
+python reference_segment.py --qari minshawi          # default surah = 114
+python reference_segment.py --surah 113              # Surah Al-Falaq (saare qaris)
+python reference_segment.py --surah 113 --qari hatem # ek qari
 ```
 
 Koi aur thresholds chahiye to:
@@ -73,6 +75,38 @@ output/
 | 11 | 6 | مِنَ الْجِنَّةِ | 2.35s |
 | 12 | 6 | وَالنَّاسِ | 3.03s |
 
+## 21 Reference Segments (Surah Al-Falaq, 113) — word-level
+
+Client ke spec (JSON) ke mutabiq — 5 ayaat ke **word-groups** (koi basmalah nahi):
+
+| # | Ayah | Text | Duration* |
+|---|------|------|-----------|
+| 1 | 1 | قُلْ | 0.73s |
+| 2 | 1 | أَعُوذُ | 1.35s |
+| 3 | 1 | بِرَبِّ الْفَلَقِ | 4.77s |
+| 4 | 2 | مِن | 1.37s |
+| 5 | 2 | شَرِّ | 1.27s |
+| 6 | 2 | مَا | 0.63s |
+| 7 | 2 | خَلَقَ | 2.85s |
+| 8 | 3 | وَمِن | 1.77s |
+| 9 | 3 | شَرِّ | 1.25s |
+| 10 | 3 | غَاسِقٍ | 2.09s |
+| 11 | 3 | إِذَا | 1.37s |
+| 12 | 3 | وَقَبَ | 2.59s |
+| 13 | 4 | وَمِن | 1.73s |
+| 14 | 4 | شَرِّ النَّفَّاثَاتِ | 5.11s |
+| 15 | 4 | فِي | 0.37s |
+| 16 | 4 | الْعُقَدِ | 3.28s |
+| 17 | 5 | وَمِن | 2.13s |
+| 18 | 5 | شَرِّ | 1.21s |
+| 19 | 5 | حَاسِدٍ | 2.13s |
+| 20 | 5 | إِذَا | 1.27s |
+| 21 | 5 | حَسَدَ | 1.21s |
+
+\* Duration example: Abdul Basit ke clips se (`refrence/AnFalaq/01–21.wav`). Ayaat
+1-5 params ke baad jo basmalah audio hai wo segments ke bahar rehti hai (spec mein
+basmalah nahi). Boundaries har qari ki apni ASR word-timings se nikalte hain.
+
 ## JSON ke andar kya hota hai
 
 | Section | Details |
@@ -107,6 +141,24 @@ output/
 > Jo recordings basmalah ke baghair shuru hoti hain (seedha `قُلْ أَعُوذُ` se),
 > unke liye segment 1-2 (basmalah) unmatched rehte hain kyunki audio mein wo
 > mojood hi nahi.
+
+## Results — Surah 113 (Al-Falaq, 10 qaris, word-level 21 segments)
+
+| Qari | Matched |
+|------|---------|
+| Abdul Basit Abdul Samad | 21/21 |
+| Ahmed El Agamy | 21/21 |
+| Al Shatri | 21/21 |
+| Bandar Balila | 21/21 |
+| Hatem Fareed Al Waer | 21/21 |
+| Ibrahim Al-Akhdar | 21/21 |
+| Khalifa Al Tunaiji | 21/21 |
+| Saad Al Ghamdi | 21/21 |
+| Salah Bukhatir | 21/21 |
+| Saud Al Shuraim | 21/21 |
+
+> Her qari ka output: `output/<qari>/segments/surah_113_al-falaq_ref/seg_001..021.wav`
+> + `surah_113_al-falaq__reference_segments.json`.
 
 ## Kaise kaam karta hai
 

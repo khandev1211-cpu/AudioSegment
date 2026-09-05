@@ -61,13 +61,18 @@ def _parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def _find_audio_files(qari_filter: str | None) -> list[Path]:
+def _find_audio_files(qari_filter: str | None, surah_number: int | None = None) -> list[Path]:
     found = []
     for p in WORKSPACE.rglob("*"):
         if not (p.is_file() and p.suffix.lower() in AUDIO_EXTS):
             continue
         if any(part in SEARCH_EXCLUDE for part in p.parts):
             continue
+        # only recitations of the requested surah, e.g. 113.mp3 / 113.wav
+        if surah_number is not None:
+            m = re.search(r"(^|[^0-9])(\d{1,3})\.\w+$", p.name)
+            if not m or int(m.group(2)) != surah_number:
+                continue
         if qari_filter and qari_filter.lower() not in p.parent.name.lower():
             continue
         found.append(p.resolve())
@@ -81,7 +86,7 @@ def main() -> None:
     if not ref_segments:
         sys.exit(f"No reference_segments defined for surah {args.surah}.")
 
-    files = _find_audio_files(args.qari)
+    files = _find_audio_files(args.qari, surah_number=args.surah)
     if args.limit and args.limit > 0:
         files = files[: args.limit]
 
@@ -116,21 +121,33 @@ def main() -> None:
         print(f"  JSON -> {out_path} ({out_path.stat().st_size / 1024:.0f} KB)\n")
 
     # ------------------------------------------------ index
+    # Rebuild the *combined* index from every reference-segments JSON on disk
+    # so one run never wipes the results of another surah (114 + 113 coexist).
     model_info = aligner.info()
     entries = []
-    for qari, out_path, result in saved:
+    seen = set()
+    for js_path in sorted(args.output.glob("*/*reference_segments.json")):
+        try:
+            with open(js_path, encoding="utf-8") as fh:
+                r = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        rel = js_path.relative_to(args.output).as_posix()
+        if rel in seen:
+            continue
+        seen.add(rel)
         entries.append(
             {
-                "json_file": out_path.relative_to(args.output).as_posix(),
-                "qari": result["qari"],
+                "json_file": rel,
+                "qari": r["qari"],
                 "surah": {
-                    "number": result["surah"]["number"],
-                    "name_ar": result["surah"]["name_ar"],
-                    "name_roman": result["surah"]["name_roman"],
+                    "number": r["surah"]["number"],
+                    "name_ar": r["surah"].get("name_ar"),
+                    "name_roman": r["surah"].get("name_roman"),
                 },
-                "segments_amount": result["summary"]["segments_amount"],
-                "segments_matched": result["summary"]["segments_matched"],
-                "total_duration_sec": result["summary"]["total_duration_sec"],
+                "segments_amount": r["summary"].get("segments_amount"),
+                "segments_matched": r["summary"].get("segments_matched"),
+                "total_duration_sec": r["summary"].get("total_duration_sec"),
             }
         )
     index = {
