@@ -1,0 +1,110 @@
+{
+  "dataset": "Quran Complete (114 surahs) — Alafasy recitation",
+  "schema": "1.0",
+  "sources": {
+    "text_words": "quran_arabic_words.json (enriched)",
+    "audio": "fullQuran/alafasy_quran_complete/ (Alafasy verse mp3s)"
+  },
+  "counts": {
+    "surahs": 114,
+    "verses": 6236,
+    "words": 77433,
+    "juz": 30,
+    "rukus": 556,
+    "pages": 604,
+    "sajda_verses": 15,
+    "audio_files": 6236,
+    "missing_audio_files": 0
+  },
+  "splits": {
+    "train": 4956,
+    "valid": 654,
+    "test": 626
+  },
+  "columns": {
+    "verse": [
+      "verse_key",
+      "surah_id",
+      "surah_name_ar",
+      "surah_name_en",
+      "revelation_type",
+      "verse_id",
+      "global_verse_number",
+      "text",
+      "words",
+      "ruku",
+      "juz",
+      "manzil",
+      "page",
+      "hizb_quarter",
+      "sajda",
+      "word_count",
+      "audio_file"
+    ],
+    "word": [
+      "word",
+      "verse_key",
+      "surah_id",
+      "verse_id",
+      "global_verse_number",
+      "word_position",
+      "ruku",
+      "juz",
+      "page",
+      "audio_file"
+    ],
+    "split": [
+      "verse_key",
+      "global_verse_number",
+      "surah_id",
+      "verse_id",
+      "text",
+      "words",
+      "audio_file",
+      "split"
+    ]
+  },
+  "sample_verse": {
+    "verse_key": "21:2",
+    "surah_id": 21,
+    "surah_name_ar": "الأنبياء",
+    "surah_name_en": "Al-Anbiyaa",
+    "revelation_type": "Meccan",
+    "verse_id": 2,
+    "global_verse_number": 2485,
+    "text": "مَا يَأۡتِيهِم مِّن ذِكۡرٖ مِّن رَّبِّهِم مُّحۡدَثٍ إِلَّا ٱسۡتَمَعُوهُ وَهُمۡ يَلۡعَبُونَ",
+    "words": [
+      "مَا",
+      "يَأۡتِيهِم",
+      "مِّن",
+      "ذِكۡرٖ",
+      "مِّن",
+      "رَّبِّهِم",
+      "مُّحۡدَثٍ",
+      "إِلَّا",
+      "ٱسۡتَمَعُوهُ",
+      "وَهُمۡ",
+      "يَلۡعَبُونَ"
+    ],
+    "ruku": 1,
+    "juz": 17,
+    "manzil": 4,
+    "page": 322,
+    "hizb_quarter": 129,
+    "sajda": null,
+    "word_count": 11,
+    "audio_file": "fullQuran/alafasy_quran_complete/021/021002.mp3"
+  },
+  "sample_word": {
+    "word": "بِسۡمِ",
+    "verse_key": "1:1",
+    "surah_id": 1,
+    "verse_id": 1,
+    "global_verse_number": 1,
+    "word_position": 0,
+    "ruku": 1,
+    "juz": 1,
+    "page": 1,
+    "audio_file": "fullQuran/alafasy_quran_complete/001/001001.mp3"
+  }
+}
